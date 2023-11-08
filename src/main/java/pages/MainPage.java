@@ -13,9 +13,8 @@ public class MainPage {
 
     private final By blockQuestions = By.xpath(".//div[@class = 'Home_SubHeader__zwi_E' and text() = 'Вопросы о важном']");
 
-    private final By orderInHeaderButton = By.xpath("/html/body/div/div/div[1]/div[1]/div[2]/button[1]");
-
-    private final By orderInBodyButton = By.xpath("/html/body/div/div/div/div[4]/div[2]/div[5]/button");
+    private final By orderInHeaderButton = By.className("Button_Button__ra12g");
+    private final By orderInBodyButton = By.cssSelector(".Button_Middle__1CSJM");
     private WebElement findElement(By locator) {
         return driver.findElement(locator);
     }

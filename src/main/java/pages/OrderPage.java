@@ -12,29 +12,31 @@ import java.util.List;
 
 public class OrderPage {
     private final WebDriver driver;
-    public static final String URL = "https://qa-scooter.praktikum-services.ru/order";
 
-    private final By nameField = By.xpath("/html/body/div/div/div[2]/div[2]/div[1]/input");
-    private final By secondNameField = By.xpath("/html/body/div/div/div[2]/div[2]/div[2]/input");
+    private final By nameField = By.xpath(".//input[@placeholder ='* Имя']");
+    // <input type="text" class="Input_Input__1iN_Z Input_Error__1Tx5d Input_Responsible__1jDKN" placeholder="* Имя" value="">
+    private final By secondNameField = By.xpath(".//input[@placeholder ='* Фамилия']");
 
-    private final By addressField = By.xpath("/html/body/div/div/div[2]/div[2]/div[3]/input");
+    private final By addressField = By.xpath(".//input[@placeholder ='* Адрес: куда привезти заказ']");
 
-    private final By metroStationField = By.xpath("/html/body/div/div/div[2]/div[2]/div[4]/div[1]/div/input");
-    private final By phoneNumberField = By.xpath("/html/body/div/div/div[2]/div[2]/div[5]/input");
-    private final By continueButton = By.xpath("/html/body/div/div/div[2]/div[3]/button");
-    private final By whenToDeliver = By.xpath("/html/body/div/div/div[2]/div[2]/div[1]/div[1]/div/input");
+    private final By metroStationField = By.xpath(".//input[@placeholder ='* Станция метро']");
+    private final By phoneNumberField = By.xpath(".//input[@placeholder ='* Телефон: на него позвонит курьер']");
+    private final By continueButton = By.cssSelector(".Button_Middle__1CSJM");
+
+    private final By whenToDeliver = By.xpath(".//input[@placeholder ='* Когда привезти самокат']");
     private final By rentalPeriod = By.cssSelector(".Dropdown-root");
     private final By rentalPeriodMenu = By.cssSelector(".Dropdown-menu");
 
     private final By scooterColor = By.className("Checkbox_Label__3wxSf");
-    private final  By commentForCourier = By.xpath("/html/body/div/div/div[2]/div[2]/div[4]/input");
-    private final By orderButton = By.xpath("/html/body/div/div/div[2]/div[3]/button[2]");
+    private final By commentForCourier = By.xpath(".//input[@placeholder ='Комментарий для курьера']");
+    private final By orderButton = By.cssSelector("button.Button_Middle__1CSJM:nth-child(2)");
 
-    private final By placingOrderWindow = By.xpath("/html/body/div/div/div[2]/div[5]");
+    private final By placingOrderWindow = By.className("Order_Modal__YZ-d3");
 
     private final By placingOrderButton = By.cssSelector("div.Order_Buttons__1xGrp:nth-child(2) > button:nth-child(2)");
 
-    private final By confirmationOrderWindow = By.xpath("/html/body/div/div/div[2]/div[5]");
+    private final By showOrderButton = By.xpath(".//button[text() = 'Посмотреть статус']");
+
     WebElement findElement(By locator) {
         return driver.findElement(locator);
     }
@@ -118,20 +120,16 @@ public class OrderPage {
     }
 
     public void waitFoLoadPlacingModalWindow() {
-        List<WebElement> elements =  Arrays.asList(
-                findElement(whenToDeliver),
-                findElement(rentalPeriod),
-                findElement(scooterColor),
-                findElement(commentForCourier));
-
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOf(findElement(placingOrderWindow)));
     }
 
-    public void clickPlacingOrderButton(){
+    public void clickPlacingOrderButton() {
         findElement(placingOrderButton).click();
     }
-    public boolean confirmationOrderWindow(){
-        return findElement(confirmationOrderWindow).isDisplayed();
+
+    public void waitForLoadShowOrderButton() {
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.visibilityOf(findElement(showOrderButton)));
     }
 }

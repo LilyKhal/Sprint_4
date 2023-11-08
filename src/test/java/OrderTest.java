@@ -1,4 +1,3 @@
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -121,7 +120,7 @@ public class OrderTest {
         orderPage.waitFoLoadPlacingModalWindow();
         orderPage.clickPlacingOrderButton();
 
-        Assert.assertTrue("Форма подтверждения статуса заказа не загрузилась", orderPage.confirmationOrderWindow());
+        orderPage.waitForLoadShowOrderButton();
     }
 
     @org.junit.After
