@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class OrderPage {
@@ -62,8 +63,27 @@ public class OrderPage {
         findElement(continueButton).sendKeys(Keys.ENTER);
     }
 
-    public void waitForLoad() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.urlToBe(URL));
+    public void waitForLoadFirstPart() {
+        List<WebElement> elements =  Arrays.asList(
+                findElement(nameField),
+                findElement(secondNameField),
+                findElement(addressField),
+                findElement(metroStationField),
+                findElement(phoneNumberField));
+
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.visibilityOfAllElements(elements));
+    }
+
+    public void waitForLoadSecondPart() {
+        List<WebElement> elements =  Arrays.asList(
+                findElement(whenToDeliver),
+                findElement(rentalPeriod),
+                findElement(scooterColor),
+                findElement(commentForCourier));
+
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
     public void setWhenToDeliverField(String date){
@@ -97,23 +117,17 @@ public class OrderPage {
         findElement(orderButton).sendKeys(Keys.ENTER);
     }
 
-    public boolean isFirstPartLoaded() {
-        return findElement(nameField).isDisplayed() &&
-               findElement(secondNameField).isDisplayed() &&
-               findElement(addressField).isDisplayed() &&
-               findElement(metroStationField).isEnabled() &&
-               findElement(phoneNumberField).isEnabled();
-    }
-    public boolean isSecondPartLoaded() {
-        return findElement(whenToDeliver).isDisplayed() &&
-               findElement(rentalPeriod).isDisplayed() &&
-               findElement(scooterColor).isDisplayed() &&
-               findElement(commentForCourier).isDisplayed();
+    public void waitFoLoadPlacingModalWindow() {
+        List<WebElement> elements =  Arrays.asList(
+                findElement(whenToDeliver),
+                findElement(rentalPeriod),
+                findElement(scooterColor),
+                findElement(commentForCourier));
+
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.visibilityOf(findElement(placingOrderWindow)));
     }
 
-    public boolean placingModalWindowOpened() {
-        return findElement(placingOrderWindow).isDisplayed();
-    }
     public void clickPlacingOrderButton(){
         findElement(placingOrderButton).click();
     }

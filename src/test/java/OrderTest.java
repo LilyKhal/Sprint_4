@@ -99,9 +99,7 @@ public class OrderTest {
             mainPage.clickOrderInBodyButton();
         }
 
-        orderPage.waitForLoad();
-
-        Assert.assertTrue("первая часть формы заказа не загрузилась", orderPage.isFirstPartLoaded());
+        orderPage.waitForLoadFirstPart();
 
         orderPage.setNameField(name);
         orderPage.setSecondNameField(secondName);
@@ -110,7 +108,8 @@ public class OrderTest {
         orderPage.setPhoneNumberField(phoneNumber);
 
         orderPage.clickContinueButton();
-        Assert.assertTrue("вторая часть формы заказа не загрузилась", orderPage.isSecondPartLoaded());
+
+        orderPage.waitForLoadSecondPart();
 
         orderPage.setWhenToDeliverField(date);
         orderPage.setRentalPeriodField(quantity);
@@ -119,8 +118,9 @@ public class OrderTest {
 
         orderPage.clickOrderButton();
 
-        Assert.assertTrue("Последняя форма заказ не загрузилась", orderPage.placingModalWindowOpened());
+        orderPage.waitFoLoadPlacingModalWindow();
         orderPage.clickPlacingOrderButton();
+
         Assert.assertTrue("Форма подтверждения статуса заказа не загрузилась", orderPage.confirmationOrderWindow());
     }
 
